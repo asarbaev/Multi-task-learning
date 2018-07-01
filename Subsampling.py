@@ -72,6 +72,8 @@ def SS_dataset(p,th,s):
     list_1=[list(tup)+[0]+[1] for tup in list_1]                                                                #convert to list of lists
     df_list_1 = pd.DataFrame(list_1, columns=['user_id','item_id','created_at','interaction_type','displayed']) #df_list_1 is a list of all displyaed pairs from "impressions" file
     df_list_1=df_list_1[['user_id','item_id','interaction_type','displayed','created_at']]
+    df_list_1 = df_list_1[df_list_1['item_id'].isin(df['item_id'])]
+    df_list_1 = df_list_1[df_list_1['user_id'].isin(df['user_id'])]    
     df.created_at=pd.to_datetime(df.created_at).dt.week
     df_list_1g=df_list_1.groupby(['user_id','item_id']).count().reset_index()
     
